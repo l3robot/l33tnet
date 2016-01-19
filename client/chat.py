@@ -16,23 +16,37 @@ def broadcast(port, message):
 
 	s.close()
 
-def encode(username, message):
+def encode(username, message, special=False):
 
-	m = {'l33tnet':True, 'name':username, 'message':message}
+	m = {'l33tnet':True, 'name':username, 'message':message, 'special':special}
 
 	return json.dumps(m)
 
-def chat(PORT):
-	
-	username = input("Choose a username : ")
+def command(PORT, username, command):
+
+	if command == 'quit' or command == 'q':
+		broadcast(PORT, encode(username, '{} leaved the chat'.format(username), special=True))
+		print('*** Quitting ***')
+		return 0
+	else:
+		return 1
+
+def chat(PORT, username):
 
 	print("Write your messages here!")
 	print("=========================")
 	print()
 
+	broadcast(PORT, encode(username, '{} joined the chat'.format(username), special=True))
+
 	while True:
-		message = input("> ")
-		broadcast(PORT, encode(username, message))
+		message = input('{} > '.format(username))
+
+		if (message[0] != '/'):
+			broadcast(PORT, encode(username, message))
+		else:
+			if not command(PORT, username, message[1:]):
+				break
 
 class Emitter:
 

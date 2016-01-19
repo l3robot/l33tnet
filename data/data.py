@@ -13,4 +13,4 @@ def check(data):
 	except KeyError:
 		return None
 
-	return load_data['name'], load_data['message']
+	return load_data['name'], load_data['message'], load_data['special']
