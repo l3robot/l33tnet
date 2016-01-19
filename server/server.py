@@ -17,7 +17,9 @@ class Server:
 			return None
 
 	def listen(self):
-
 		recv_data, addr = self.s.recvfrom(4096)
 
-		return recv_data, addr
+		return recv_data
+
+	def close(self):
+		self.s.close()

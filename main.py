@@ -24,10 +24,13 @@ def main():
 		serv = server.Server(PORT)
 
 		print("Listening on port {} ...".format(PORT))
-
+		print()
+		print('-'*10)
+		
 		while True:
 			name, message = data.check(serv.listen())
 			print("{} : {}".format(name, message))
+			print('-'*10)
 	else:
 		chat.chat(PORT)
 

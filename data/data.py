@@ -1,9 +1,9 @@
 import json
 
-def check(data, addr):
+def check(data):
 
 	try:
-		load_data = json.load(s)
+		load_data = json.loads(data.decode())
 	except TypeError:
 		print("Someone doesn't use json....")
 		return None
