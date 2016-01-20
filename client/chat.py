@@ -27,9 +27,12 @@ def command(PORT, username, command):
 	if command == 'quit' or command == 'q':
 		broadcast(PORT, encode(username, '{} leaved the chat'.format(username), special=True))
 		print('*** Quitting ***')
-		return 0
+	elif command == 'help' or command == 'h':
+		print('List of valid commands:')f
+		print(' /help : list of command')
+		print(' /quit : disconnect and quit application')
 	else:
-		return 1
+		print('*** Invalid command {} ***'.format(command))
 
 def chat(PORT, username):
 
@@ -42,11 +45,12 @@ def chat(PORT, username):
 	while True:
 		message = input('{} > '.format(username))
 
+		if len(message) == 0 :
+			continue
 		if (message[0] != '/'):
 			broadcast(PORT, encode(username, message))
 		else:
-			if not command(PORT, username, message[1:]):
-				break
+			command(PORT, username, message[1:])
 
 class Emitter:
 

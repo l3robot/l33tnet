@@ -55,7 +55,10 @@ def main():
 
 	signal.pause()
 
-	chat.chat(port, username)
+	try:
+		chat.chat(port, username)
+	except (KeyboardInterrupt, SystemExit): # Handle the ctrl+c and other normal disconnection
+		chat.command(port, username, 'quit')
 
 	p.terminate()
 
