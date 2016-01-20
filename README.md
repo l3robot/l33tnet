@@ -10,6 +10,6 @@ For local usage, enter the following in two different terminals:
 ```Shell
 python3 main.py
 ```
-You can now talk to yourself :-)
+You can now talk on LAN :-)
 
 Use `/help` for information on available command
