@@ -55,7 +55,11 @@ def main():
 
 	signal.pause()
 
-	chat.chat(port, username)
+	try:
+		chat.chat(port, username)
+	except (KeyboardInterrupt, SystemExit): # Handle the ctrl+c
+		chat.broadcast(port, chat.encode(username, '{} leaved the chat'.format(username), special=True))
+		print('*** Quitting ***')
 
 	p.terminate()
 
