@@ -16,7 +16,6 @@ def server_process(pipe, port, username):
 	serv = server.Server(port)
 
 	print("Listening on port {} ...".format(port))
-	print('-'*10)
 	print()
 
 	ppid = os.getppid()

@@ -11,7 +11,14 @@ def quitting(PORT, username, command):
 def helping(PORT, username, command):
 	print('List of valid commands:')
 	for key, c in commands.items():
-		print('/{} or /{} : {}'.format(c['name'], c['name'][0], c['des']))
+		print('/{} or /{} : {}'.format(key, c['shortcut'], c['des']))
+
+def clear(PORT, username, command):
+	print(u'\033[2J\033[H',end='', flush=True)
+	print('-------------')
+	print('** l33tnet **')
+	print('-------------')
+	print()
 
 def catting(PORT, username, command):
 	cats = [
@@ -32,10 +39,18 @@ def catting(PORT, username, command):
 			sleep(randint(1, 2))
 
 
+shortcuts = {
+	'h' : 'help',
+	'q' : 'quit',
+	'-' : 'clear',
+	'c' : 'cat'
+}
+
 commands = {
-	'h': { 'name': 'help', 'command': helping, 'des' : 'List of commands'},
-	'q': { 'name': 'quit', 'command': quitting, 'des' : 'Quit application'},
-	'c': { 'name': 'cat', 'command': catting, 'des' : '(^._.^)ﾉ'}
+	'help' : { 'command': helping, 'des' : 'List of commands', 'shortcut' : 'h'},
+	'quit' : { 'command': quitting, 'des' : 'Quit application', 'shortcut' : 'q'},
+	'clear' : { 'command': clear, 'des': 'Clearing screen', 'shortcut' : '-'},
+	'cat' : { 'command': catting, 'des' : '(^._.^)ﾉ', 'shortcut' : 'c'}
 }
 
 def broadcast(port, message):
@@ -64,28 +79,19 @@ def command(PORT, username, command):
 	if command == '':
 		return
 
-	c = command[0]
-	if not c in commands:
-		print('*** Invalid command {} ***'.format(command))
-	elif len(command) > 1 and commands[c]['name'] != command:
-		print('*** Invalid command {} ***'.format(command))
-	else:
-		commands[command[0]]['command'](PORT, username, command)
+	if not command in commands:
+		if command in shortcuts:
+			command = shortcuts[command]
+		else:
+			print('*** Invalid command {} ***'.format(command)) 
 
-	# if command == 'quit' or command == 'q':
-	# 	broadcast(PORT, encode(username, '{} leaved the chat'.format(username), special=True))
-	# 	print('*** Quitting ***')
-	# elif command == 'help' or command == 'h':
-	# 	print('List of valid commands:')
-	# 	print(' /help : list of command')
-	# 	print(' /quit : disconnect and quit application')
-	# else:
-	# 	print('*** Invalid command {} ***'.format(command))
+	commands[command]['command'](PORT, username, command)
 
 def chat(PORT, username):
 
-	print("Write your messages here!")
-	print("=========================")
+	print('-------------')
+	print('** l33tnet **')
+	print('-------------')
 	print()
 
 	broadcast(PORT, encode(username, '{} joined the chat'.format(username), special=True))
