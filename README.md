@@ -11,3 +11,5 @@ For local usage, enter the following in two different terminals:
 python3 main.py
 ```
 You can now talk to yourself :-)
+
+Use `/help` for information on available command
